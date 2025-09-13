@@ -33,21 +33,18 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
+             <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('absensi.index')}}">
+                    <i class="fas fa-qrcode"></i>
+                    <span>Scan Absen Qris</span></a>
+            </li>
               <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="{{route('absensi.create')}}">
                     <i class="fas fa-clipboard-list"></i>
                     <span>Absensi Manual</span></a>
             </li>
-
-            
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('absensi.index')}}">
-                    <i class="fas fa-qrcode"></i>
-                    <span>Scan Absen Qris</span></a>
-            </li>
-
 
               <!-- Divider -->
             <hr class="sidebar-divider">
@@ -102,9 +99,10 @@
                         <a class="collapse-item" href="{{route('kelasi.index')}}">Data Kelas</a>
                         <a class="collapse-item" href="{{route('walikel.index')}}">Data Wali Kelas</a>
                         <a class="collapse-item" href="{{ route('kehadiran.index')}}">Data Kehadiran</a>
-                    </div>
+                                          </div>
                 </div>
             </li>
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseset"
@@ -115,6 +113,7 @@
                 <div id="collapseset" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('user.index')}}">Data User</a>
+                        <a class="collapse-item" href="{{ route('logs.index')}}">Data Log</a>
                         <a class="collapse-item" href="{{ url('/backup-sekarang') }}">Backup Data</a>
 
                     </div>

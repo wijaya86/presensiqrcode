@@ -34,9 +34,11 @@ class KetidakhadiranControler extends Controller
                         'kelasis.NamaKelas',
                         'kehadirans.kehadiran'
                     )
-                    ->orderBy('absensis.tanggal', 'asc')
+                    
                     ->whereNotIn('absensis.id_Kehadiran', [1])
-                    ->whereBetween('absensis.tanggal', [$startDate, $endDate]);
+                    ->whereBetween('absensis.tanggal', [$startDate, $endDate])
+                    ->orderBy('absensis.tanggal', 'desc')
+                    ->orderBy('siswas.NamaSiswa', 'asc');
 
                 // Kalau pilih kelas tertentu (bukan semua)
                 if (!empty($kelasFilter) && $kelasFilter !== "0") {
@@ -75,9 +77,11 @@ class KetidakhadiranControler extends Controller
                     'kelasis.NamaKelas',
                     'kehadirans.kehadiran'
                 )
-                ->orderBy('absensis.tanggal', 'asc')
+              
                 ->whereNotIn('absensis.id_Kehadiran', [1])
-                ->whereBetween('absensis.tanggal', [$startDate, $endDate]);
+                ->whereBetween('absensis.tanggal', [$startDate, $endDate])
+                ->orderBy('absensis.tanggal', 'desc')
+                    ->orderBy('siswas.NamaSiswa', 'asc');
 
             // Nama default untuk file PDF
             $kelasNama = "Semua_Kelas";

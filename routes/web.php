@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 // use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\ManualController;
+use App\Http\Controllers\FaceController;
+
 
 Route::get('/', function () {
     return view('login');
@@ -33,6 +35,11 @@ Route::resource('card', \App\Http\Controllers\CardController::class)->middleware
 Route::resource('chart', \App\Http\Controllers\GrafikController::class)->middleware('auth');
 Route::resource('rekapkehadiran', \App\Http\Controllers\RekapkehadiranController::class)->middleware('auth');
 Route::resource('ketidakhadiran', \App\Http\Controllers\KetidakhadiranControler::class)->middleware('auth');
+Route::resource('mobile', \App\Http\Controllers\MobileController::class)->middleware('auth');
+Route::resource('mobileScan', \App\Http\Controllers\MobileAbsensiController::class)->middleware('auth');
+Route::resource('mobileabsen', \App\Http\Controllers\MobileAbsenController::class)->middleware('auth');
+// web.php
+Route::resource('logs', \App\Http\Controllers\AutoAlphaLogController::class)->middleware('auth');
 
 Route::get('/backup-sekarang', function () {
     $db   = env('DB_DATABASE');

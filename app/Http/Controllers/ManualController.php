@@ -19,17 +19,43 @@ class ManualController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $query = DB::table('absensis')
-                ->join('kehadirans', 'absensis.id_Kehadiran', '=', 'kehadirans.id')
-                ->join('siswas', 'absensis.NISN', '=', 'siswas.NISN')
-                ->join('kelasis', 'siswas.id_Kelas', '=', 'kelasis.id')
-                ->select('absensis.id','absensis.tanggal', 'siswas.NISN', 'siswas.NamaSiswa', 'siswas.Jenkel',
-                        'kelasis.NamaKelas', 'kehadirans.kehadiran')
-                ->orderBy('absensis.tanggal', 'asc');
+         $startDate = $request->get('start_date', Carbon::now()->startOfMonth()->toDateString());
+                $endDate   = $request->get('end_date', Carbon::now()->toDateString());
+                $kelasFilter = $request->get('kelas'); // dari form
+
+                $query = DB::table('absensis')
+                    ->join('kehadirans', 'absensis.id_Kehadiran', '=', 'kehadirans.id')
+                    ->join('siswas', 'absensis.NISN', '=', 'siswas.NISN')
+                    ->join('kelasis', 'siswas.id_Kelas', '=', 'kelasis.id')
+                    ->select(
+                        'absensis.id',
+                        'absensis.tanggal',
+                        'siswas.NISN',
+                        'siswas.NamaSiswa',
+                        'siswas.Jenkel',
+                        'kelasis.NamaKelas',
+                        'kehadirans.kehadiran'
+                    )
+                    
+                    ->whereBetween('absensis.tanggal', [$startDate, $endDate])
+                    ->orderBy('absensis.tanggal', 'desc')
+                    ->orderBy('siswas.NamaSiswa', 'asc');
+
+                // Kalau pilih kelas tertentu (bukan semua)
+                if (!empty($kelasFilter) && $kelasFilter !== "0") {
+                    $query->where('kelasis.id', $kelasFilter);
+                }
+
                 $rekap = $query->get();
-                return view('pages/Data Absensi/DaftarAbsensi',compact('rekap'));
+
+                // ambil daftar kelas untuk dropdown
+                $kelasList = DB::table('kelasis')
+                    ->whereNotIn('id', [10, 11])
+                    ->get();
+
+                return view('pages/Data Absensi/DaftarAbsensi', compact('rekap', 'kelasList', 'startDate', 'endDate', 'kelasFilter'));
     }
 
     /**
@@ -66,8 +92,8 @@ class ManualController extends Controller
             'id_Kehadiran'         => $request->id_Kehadiran
         ]);
 
-         return redirect()->route('rekap.index')
-            ->with('message','Product created successfully.');
+         return redirect()->route('absensi.create')
+            ->with('message',' Absensi berhasil!');
        
 
     }

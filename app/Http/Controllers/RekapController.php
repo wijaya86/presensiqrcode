@@ -33,8 +33,10 @@ class RekapController extends Controller
                         'kelasis.NamaKelas',
                         'kehadirans.kehadiran'
                     )
-                    ->orderBy('absensis.tanggal', 'asc')
-                    ->whereBetween('absensis.tanggal', [$startDate, $endDate]);
+                    
+                    ->whereBetween('absensis.tanggal', [$startDate, $endDate])
+                    ->orderBy('absensis.tanggal', 'desc')
+                    ->orderBy('siswas.NamaSiswa', 'asc');
 
                 // Kalau pilih kelas tertentu (bukan semua)
                 if (!empty($kelasFilter) && $kelasFilter !== "0") {
@@ -73,8 +75,9 @@ class RekapController extends Controller
             'kelasis.NamaKelas',
             'kehadirans.kehadiran'
         )
-        ->orderBy('absensis.tanggal', 'asc')
-        ->whereBetween('absensis.tanggal', [$startDate, $endDate]);
+        ->whereBetween('absensis.tanggal', [$startDate, $endDate])
+        ->orderBy('siswas.NamaSiswa', 'asc')
+        ->orderBy('absensis.tanggal', 'desc');
 
     // Nama default untuk file PDF
     $kelasNama = "Semua_Kelas";

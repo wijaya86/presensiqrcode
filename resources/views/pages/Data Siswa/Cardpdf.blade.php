@@ -4,80 +4,73 @@
     <meta charset="utf-8">
     <style>
         @page {
-            margin: 10px;
+            margin: 15px;
         }
         body {
             font-family: Arial, sans-serif;
             font-size: 10px;
             margin: 0;
             padding: 0;
-        }
-        .page {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
+            text-align: left;
         }
         .card {
-            width: 5.4cm;
-            height: 8.56cm;
-            border: 2px solid #000;
+            display: inline-block;
+            vertical-align: top;
+            width: 5.8cm; /* <= lebih kecil supaya muat 3 */
+            height: 8.3cm;
+            border: 2px solid #0d6efd;
             border-radius: 6px;
             padding: 5px;
-            position: relative;
-            box-sizing: border-box;
-            margin: 5px;
+            margin: 0.2cm; /* margin juga dikecilkan */
             text-align: center;
+            box-sizing: border-box;
         }
         .foto {
-            width: 2.5cm;
-            height: 3.2cm;
+            width: 2.3cm;
+            height: 3.0cm;
             object-fit: cover;
-            border: 1px solid #000;
+            border: 2px solid #0d6efd;
+            border-radius: 6px;
+            background: #fff;
+        }
+        .nama {
             margin-top: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            color: #0d6efd;
+        }
+        .info {
+            font-size: 10px;
+            margin: 2px 0;
         }
         .qr {
-            width: 3cm;
-            height: 3cm;
+            width: 2.7cm;
+            height: 2.7cm;
             margin-top: 6px;
         }
         .footer {
-           
-            bottom: 0px;
-            width: 100%;
+            margin-top: 3px;
             font-size: 9px;
             border-top: 1px solid #ccc;
-            padding-top: 0px;
+            padding-top: 2px;
         }
     </style>
 </head>
 <body>
-    @php $count = 0; @endphp
-    <div class="page">
     @foreach($siswas as $siswa)
         <div class="card">
             <img src="{{ public_path('foto/'.$siswa->foto) }}" class="foto">
-            <div>
-                <br>
-                <strong>{{ $siswa->NamaSiswa }}</strong><br>
-                NIS: {{ $siswa->NISN }}<br>
-                Kelas: {{ $siswa->kelasi->NamaKelas }}
-            </div>
+            <div class="nama">{{ $siswa->NamaSiswa }}</div>
+            <div class="info">NIS: {{ $siswa->NISN }}</div>
+            <div class="info">Kelas: {{ $siswa->kelasi->NamaKelas }}</div>
             @if($siswa->qrcode)
                 <img src="data:image/png;base64,{{ $siswa->qrcode }}" class="qr">
             @endif
             <div class="footer">
-                SMK Negeri 1 Contoh<br>
-                Tahun Pelajaran 2025/2026
+                SMKN 1 Karangtengah<br>
+                PPLG
             </div>
         </div>
-        @php $count++; @endphp
-
-        @if($count % 9 === 0 && !$loop->last)
-            </div>
-            <div style="page-break-after: always;"></div>
-            <div class="page">
-        @endif
     @endforeach
-    </div>
 </body>
 </html>

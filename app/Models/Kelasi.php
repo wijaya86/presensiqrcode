@@ -19,8 +19,9 @@ class Kelasi extends Model
         return $this->hasOne(Wlikel::class, 'id_Kelas');
     }
 
-     public function  siswa()
+     public function siswa()
     {
-        return $this->hasOne(Siswa::class, 'id_Kelas');
+        return $this->hasMany(Siswa::class, 'id_Kelas');
     }
+
 }
